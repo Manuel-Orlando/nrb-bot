@@ -1,0 +1,22 @@
+discord:
+  token: "SEU_TOKEN_AQUI"
+  prefix: "!"
+  admin_ids: ["SEU_ID_DISCORD"]
+
+challenge:
+  reroll_limit: 2
+  auto_cleanup_hours: 24
+  inactive_channel_hours: 168
+
+logging:
+  admin_log_path: "logs/admin/bot.log"
+  user_log_channel_id: 123456789012345678
+
+scraping:
+  realmeye_url: "https://www.realmeye.com/player/"
+  update_interval_minutes: 5
+  batch_size: 10
+
+web:
+  base_url: "https://seuusuario.github.io/nrb-bot"
+  github_raw_url: "https://raw.githubusercontent.com/seuusuario/nrb-bot/main"
