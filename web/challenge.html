@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NRB Desafio</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+        color: #fff;
+        min-height: 100vh;
+        padding: 20px;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      header {
+        text-align: center;
+        padding: 30px 0;
+      }
+      .back-btn {
+        display: inline-block;
+        color: #4cc9f0;
+        text-decoration: none;
+        margin-bottom: 20px;
+        font-size: 0.9em;
+      }
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        color: #4cc9f0;
+      }
+      .challenge-info {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        padding: 30px;
+        margin-top: 20px;
+        backdrop-filter: blur(10px);
+      }
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+      .info-item {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 15px;
+        border-radius: 10px;
+      }
+      .info-label {
+        color: #aaa;
+        font-size: 0.9em;
+        margin-bottom: 5px;
+      }
+      .info-value {
+        font-size: 1.3em;
+        font-weight: bold;
+      }
+      .status-badge {
+        display: inline-block;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+        margin: 10px 0;
+      }
+      .status-active {
+        background: #2ecc71;
+        color: #fff;
+      }
+      .status-accepted {
+        background: #3498db;
+        color: #fff;
+      }
+      .status-expired {
+        background: #e74c3c;
+        color: #fff;
+      }
+      .timeline {
+        margin-top: 30px;
+        padding-left: 20px;
+        border-left: 2px solid #4cc9f0;
+      }
+      .timeline-item {
+        margin-bottom: 20px;
+        position: relative;
+        padding-left: 20px;
+      }
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -26px;
+        top: 5px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #4cc9f0;
+      }
+      .timeline-time {
+        color: #aaa;
+        font-size: 0.9em;
+      }
+      .timeline-event {
+        font-size: 1.1em;
+        margin-top: 5px;
+      }
+      .loading {
+        text-align: center;
+        padding: 40px;
+        color: #aaa;
+      }
+      .error {
+        text-align: center;
+        padding: 40px;
+        color: #e74c3c;
+        background: rgba(231, 76, 60, 0.1);
+        border-radius: 10px;
+      }
+      .not-found {
+        text-align: center;
+        padding: 60px 20px;
+      }
+      .not-found h2 {
+        color: #e74c3c;
+        margin-bottom: 20px;
+      }
+      .refresh-btn {
+        background: #4cc9f0;
+        color: #000;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+      .refresh-btn:hover {
+        background: #3aa8d8;
+      }
+      footer {
+        text-align: center;
+        margin-top: 40px;
+        color: #666;
+        padding-top: 20px;
+        border-top: 1px solid #333;
+      }
+      .discord-link {
+        display: inline-block;
+        background: #7289da;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 20px;
+        font-weight: bold;
+      }
+      @media (max-width: 600px) {
+        .info-grid {
+          grid-template-columns: 1fr;
+        }
+        h1 {
+          font-size: 2em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <a href="./index.html" class="back-btn"
+          >← Voltar para todos os desafios</a
+        >
+        <h1 id="challenge-title">Desafio #</h1>
+        <div id="status-badge" class="status-badge status-active">
+          Carregando...
+        </div>
+      </header>
+
+      <main>
+        <div id="challenge-content" class="loading">
+          Carregando informações do desafio...
+        </div>
+
+        <div id="not-found" class="not-found" style="display: none">
+          <h2>❌ Desafio não encontrado</h2>
+          <p>O desafio que você está procurando não existe ou foi removido.</p>
+          <a href="./index.html" class="discord-link">Ver todos os desafios</a>
+        </div>
+
+        <div id="timeline" class="timeline" style="display: none">
+          <h3>📜 Linha do Tempo</h3>
+          <div id="timeline-content">
+            <!-- Timeline será preenchida via JavaScript -->
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px">
+          <button onclick="carregarDetalhesDesafio()" class="refresh-btn">
+            🔄 Atualizar
+          </button>
+          <p style="color: #666; margin-top: 10px; font-size: 0.9em">
+            Atualizado automaticamente a cada minuto
+          </p>
+        </div>
+      </main>
+
+      <footer>
+        <p>NRB Bot © 2024 • Dados atualizados automaticamente</p>
+        <p>Para mais informações, entre no servidor do Discord</p>
+        <a href="https://discord.gg/" target="_blank" class="discord-link"
+          >🎮 Entrar no Discord</a
+        >
+      </footer>
+    </div>
+
+    <script>
+      // Pegar ID do desafio da URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const challengeId = urlParams.get("id");
+
+      if (!challengeId) {
+        document.getElementById("not-found").style.display = "block";
+        document.getElementById("challenge-content").style.display = "none";
+        document.getElementById("challenge-title").textContent =
+          "Desafio não especificado";
+      } else {
+        document.getElementById(
+          "challenge-title"
+        ).textContent = `Desafio #${challengeId}`;
+        carregarDetalhesDesafio(challengeId);
+      }
+
+      async function carregarDetalhesDesafio(id = challengeId) {
+        try {
+          const response = await fetch("./data.json?v=" + Date.now());
+          if (!response.ok) throw new Error("Erro ao carregar dados");
+
+          const todosDesafios = await response.json();
+          const desafio = todosDesafios.find((d) => d.id === id);
+
+          if (!desafio) {
+            mostrarNaoEncontrado();
+            return;
+          }
+
+          exibirDetalhesDesafio(desafio);
+          criarTimeline(desafio);
+        } catch (error) {
+          mostrarErro(error);
+        }
+      }
+
+      function exibirDetalhesDesafio(desafio) {
+        // Atualizar badge de status
+        const statusBadge = document.getElementById("status-badge");
+        statusBadge.className =
+          "status-badge " +
+          (desafio.aceito ? "status-accepted" : "status-active");
+        statusBadge.textContent = desafio.aceito ? "✅ ACEITO" : "🔄 ATIVO";
+
+        // Criar conteúdo
+        document.getElementById("challenge-content").innerHTML = `
+                <div class="challenge-info">
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">👤 Jogador</div>
+                            <div class="info-value">${desafio.ign}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">🎭 Classe</div>
+                            <div class="info-value">${desafio.classe}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">🔄 Rerolls</div>
+                            <div class="info-value">${
+                              desafio.rerolls
+                            }/2 usados</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">👤 Discord</div>
+                            <div class="info-value">${desafio.username}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">⏰ Tempo</div>
+                            <div class="info-value">${desafio.tempo}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">📅 Iniciado em</div>
+                            <div class="info-value">${desafio.criado}</div>
+                        </div>
+                    </div>
+                    
+                    ${
+                      !desafio.aceito
+                        ? `
+                    <div style="background: rgba(255, 193, 7, 0.1); padding: 15px; border-radius: 10px; margin-top: 20px;">
+                        <strong>⏰ Atenção:</strong> Este desafio precisa ser aceito em até 24h após criação.
+                        Use o comando <code>!aceitar</code> no Discord para confirmar.
+                    </div>
+                    `
+                        : ""
+                    }
+                </div>
+            `;
+
+        // Mostrar timeline
+        document.getElementById("timeline").style.display = "block";
+      }
+
+      function criarTimeline(desafio) {
+        const timelineContent = document.getElementById("timeline-content");
+        let html = "";
+
+        // Evento: Criação do desafio
+        html += `
+            <div class="timeline-item">
+                <div class="timeline-time">${desafio.criado}</div>
+                <div class="timeline-event">🎯 Desafio criado</div>
+                <div style="color: #aaa; font-size: 0.9em;">Classe sorteada: ${desafio.classe}</div>
+            </div>
+            `;
+
+        // Evento: Rerolls (simulado - precisaria de mais dados)
+        if (desafio.rerolls > 0) {
+          for (let i = 1; i <= desafio.rerolls; i++) {
+            html += `
+                    <div class="timeline-item">
+                        <div class="timeline-time">${
+                          desafio.criado.split(" ")[0]
+                        } ~${10 + i}:00</div>
+                        <div class="timeline-event">🔄 Reroll #${i}</div>
+                        <div style="color: #aaa; font-size: 0.9em;">Nova classe sorteada</div>
+                    </div>
+                    `;
+          }
+        }
+
+        // Evento: Aceitação (se aceito)
+        if (desafio.aceito) {
+          html += `
+                <div class="timeline-item">
+                    <div class="timeline-time">${
+                      desafio.criado.split(" ")[0]
+                    } ~${10 + desafio.rerolls + 1}:00</div>
+                    <div class="timeline-event">✅ Desafio aceito</div>
+                    <div style="color: #aaa; font-size: 0.9em;">Classe final: ${
+                      desafio.classe
+                    }</div>
+                </div>
+                `;
+        }
+
+        timelineContent.innerHTML = html;
+      }
+
+      function mostrarNaoEncontrado() {
+        document.getElementById("challenge-content").style.display = "none";
+        document.getElementById("timeline").style.display = "none";
+        document.getElementById("not-found").style.display = "block";
+      }
+
+      function mostrarErro(error) {
+        document.getElementById("challenge-content").innerHTML = `
+                <div class="error">
+                    <h3>❌ Erro ao carregar dados</h3>
+                    <p>${error.message}</p>
+                    <button onclick="carregarDetalhesDesafio()" class="refresh-btn">Tentar novamente</button>
+                </div>
+            `;
+      }
+
+      // Atualizar automaticamente a cada minuto
+      setInterval(() => {
+        if (challengeId) carregarDetalhesDesafio(challengeId);
+      }, 60000);
+    </script>
+  </body>
+</html>

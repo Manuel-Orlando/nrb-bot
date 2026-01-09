@@ -2,12 +2,13 @@ import discord
 from discord.ext import commands
 import yaml
 import os
-from dotenv import load_dotenv
+import sys
+
+# Adiciona a pasta atual ao path do Python
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # Carregar configurações
-load_dotenv()
-
-with open('config/config.yaml', 'r') as f:
+with open('../config/config.yaml', 'r') as f:
     config = yaml.safe_load(f)
 
 class NRBBot(commands.Bot):
@@ -23,9 +24,13 @@ class NRBBot(commands.Bot):
         )
     
     async def setup_hook(self):
-        # Carregar comandos
-        await self.load_extension('bot.commands')
-        print("✅ Comandos carregados")
+        # Carregar comandos diretamente
+        try:
+            from commands import ChallengeCommands
+            await self.add_cog(ChallengeCommands(self))
+            print("✅ Comandos carregados com sucesso!")
+        except ImportError as e:
+            print(f"❌ Erro ao carregar comandos: {e}")
     
     async def on_ready(self):
         print(f"✅ Bot online como {self.user}")

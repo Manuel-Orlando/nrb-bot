@@ -1,7 +1,7 @@
 discord:
   token: "SEU_TOKEN_AQUI"
   prefix: "!"
-  admin_ids: ["SEU_ID_DISCORD"]
+  admin_ids: ["SEU_ID_AQUI"]
 
 challenge:
   reroll_limit: 2

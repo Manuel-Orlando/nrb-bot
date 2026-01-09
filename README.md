@@ -1,25 +1,43 @@
-# NRB Bot - Sistema de Desafios para Discord
+# 🤖 NRB Bot - Sistema de Desafios para Discord
 
-Bot para gerenciar desafios NRB no Discord com tracking automático via RealmEye.
+Bot para gerenciar desafios NRB no Discord com tracking automático via página web.
 
-## Funcionalidades
+## 🚀 Funcionalidades Principais
 
-- ✅ Sistema de desafios com sorteio de classes
-- ✅ Reroll limitado
-- ✅ Tracking automático via RealmEye
-- ✅ Páginas web para acompanhamento
-- ✅ Logs inteligentes (admin/user)
+- ✅ Sistema de desafios com sorteio aleatório de classes
+- ✅ Reroll limitado (máximo 2x por desafio)
+- ✅ Aceitação de desafios com confirmação
+- ✅ Página web para acompanhamento em tempo real
+- ✅ Comandos intuitivos e embeds visuais
 
-## Como usar
+## 🎮 Comandos do Bot
 
-1. !desafio [seu-ign] - Inicia novo desafio
-2. !reroll - Reroll da classe (max 2x)
-3. !aceitar - Aceita a classe
-4. !meudesafio - Mostra seu desafio atual
+| Comando          | Descrição                     | Exemplo              |
+| ---------------- | ----------------------------- | -------------------- |
+| `!desafio [IGN]` | Inicia um novo desafio        | `!desafio Player123` |
+| `!reroll`        | Faz reroll da classe (máx 2x) | `!reroll`            |
+| `!aceitar`       | Aceita a classe atual         | `!aceitar`           |
+| `!meudesafio`    | Mostra seu desafio atual      | `!meudesafio`        |
+| `!ping`          | Testa a conexão do bot        | `!ping`              |
+| `!ajuda`         | Mostra todos os comandos      | `!ajuda`             |
 
-## Tecnologias
+## 🌐 Site de Acompanhamento
 
-- Python + discord.py
-- SQLite database
-- GitHub Actions (scraping)
-- GitHub Pages (site)" | Out-File -FilePath README.md -Encoding UTF8
+**URL:** https://Manuel-Orlando.github.io/nrb-bot
+
+No site você pode:
+
+- Ver todos os desafios ativos
+- Acessar página individual de cada desafio
+- Acompanhar status em tempo real
+- Compartilhar com amigos
+
+## 🛠️ Tecnologias Utilizadas
+
+- **Backend:** Python 3.10+ com discord.py
+- **Database:** SQLite (arquivo local)
+- **Frontend:** HTML5, CSS3, JavaScript vanilla
+- **Hosting:** GitHub Pages (gratuito)
+- **Versionamento:** Git & GitHub
+
+## 📁 Estrutura do Projeto

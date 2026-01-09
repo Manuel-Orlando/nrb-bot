@@ -1,7 +1,7 @@
 # Python
 __pycache__/
 *.py[cod]
-*`$py.class
+*$py.class
 *.so
 .Python
 env/
@@ -14,13 +14,22 @@ venv/
 *.sqlite3
 
 # Logs
-logs/
 *.log
 
-# Configurações
+# Configurações sensíveis
 config/config.yaml
 config/secrets/
 
 # Sistema
 .DS_Store
-Thumbs.db" | Out-File -FilePath .gitignore -Encoding UTF8
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dados temporários
+data/desafios.json
+bot/desafios.db
