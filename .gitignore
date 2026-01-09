@@ -1,7 +1,7 @@
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
+*`$py.class
 *.so
 .Python
 env/
@@ -23,10 +23,4 @@ config/secrets/
 
 # Sistema
 .DS_Store
-Thumbs.db
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
+Thumbs.db" | Out-File -FilePath .gitignore -Encoding UTF8
